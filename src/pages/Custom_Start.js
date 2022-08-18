@@ -8,7 +8,7 @@ import axios from "axios";
  * Url, auf der der Checker-Server läuft.
  * @type {string}
  */
-const statusCheckerUrl = "http://localhost:1234/";
+const statusCheckerUrl = "https://arkisland.starleague.me/";
 /**
  * Array mit Infos zu den Servern im Format [Servername,Port]
  * @type {(string|number)[][]}
@@ -24,9 +24,9 @@ const Subheading = tw.span`uppercase tracking-wider text-sm`;
 export default () => {
     const [post, setPost] = React.useState(null);
 
-    var fullUrl = statusCheckerUrl;
+    let fullUrl = statusCheckerUrl;
     fullUrl += "?serverUrl="+serverUrl;
-    for (var t = 0; t < serverList.length; t++) {
+    for (let t = 0; t < serverList.length; t++) {
         fullUrl += "&server"+t+"=";
         fullUrl += serverList[t][1];
     }
@@ -39,10 +39,17 @@ export default () => {
         });
     }, []);
 
+    axios.put("starleage.me", {
+        table: "Lager",
+        columnname: "lagerID",
+        columnid: "1"
+    }).then (res => console.log(res));
+
   return (
     <AnimationRevealPage>
         {/*Server as a foreach*/}
         {serverList.map((server, forEachIndex) => {
+
             if(!post)
                  return (<MainFeature1
                     subheading={<Subheading>{server[0]}</Subheading>}
